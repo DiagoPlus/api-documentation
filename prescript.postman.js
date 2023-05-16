@@ -1,14 +1,19 @@
 const cmd = pm.request.url.path[0]
+const requestBody = JSON.parse(pm.request.body.raw)
+
 const jsonPayload = {
     "cmd": cmd,
-    "user":"",
+    "user":"a",
     "UUID_User": pm.environment.get("UUID_User"),
-    "OS":"Web"
+    "OS":"Web",
+    ...requestBody,
 }
-
 pm.request.url.query.map((param) => {
     jsonPayload[param.key] = param.value
 })
+
+console.log("Sending :")
+console.log(jsonPayload)
 
 pm.request.url = pm.environment.get("BASE_URL")
 pm.request.headers.clear()
