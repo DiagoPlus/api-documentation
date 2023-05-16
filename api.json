@@ -1,0 +1,176 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Diagoplus API"
+    },
+    "paths": {
+        "/Identification": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "Login",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "PW",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Infos de compte de l'utilisateur"
+                    }
+                }
+            }
+        },
+        "/w_R_Societe": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "ID_Ste",
+                        "description": "L'identifiant de la société",
+                        "required": true,
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "tags": [
+                    "prod",
+                    "dev"
+                ],
+                "summary": "Recevoir une société",
+                "responses": {
+                    "200": {
+                        "description": "Les infos société",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Societe"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "La société n'existe pas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/w_E_Societe": {
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Societe"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "prod",
+                    "dev"
+                ],
+                "summary": "Recevoir une société",
+                "responses": {
+                    "200": {
+                        "description": "Les infos société",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Societe"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "La société n'existe pas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Societe": {
+                "type": "object",
+                "required": [
+                    "ID_Ste",
+                    "Nom_Societe",
+                    "Nom_Ste",
+                    "Statut",
+                    "SIRET",
+                    "ID_Bien",
+                    "Adresse",
+                    "Code_Postal",
+                    "Ville"
+                ],
+                "properties": {
+                    "ID_Ste": {
+                        "type": "integer"
+                    },
+                    "Nom_Societe": {
+                        "type": "string"
+                    },
+                    "Nom_Ste": {
+                        "type": "string"
+                    },
+                    "Statut": {
+                        "type": "string"
+                    },
+                    "SIRET": {
+                        "type": "string"
+                    },
+                    "ID_Bien": {
+                        "type": "integer"
+                    },
+                    "Adresse": {
+                        "type": "string"
+                    },
+                    "Code_Postal": {
+                        "type": "string"
+                    },
+                    "Ville": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Error": {
+                "type": "object",
+                "required": [
+                    "message"
+                ],
+                "properties": {
+                    "message": {
+                        "description": "Un message d'erreur lisible par l'humain",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
